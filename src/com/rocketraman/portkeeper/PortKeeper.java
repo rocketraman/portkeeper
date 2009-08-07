@@ -137,9 +137,12 @@ public class PortKeeper implements Runnable {
 
     private boolean openPort(int port, boolean printError) {
 
+        ServerSocketChannel socketChannel = null;
+
         try {
 
-            ServerSocketChannel socketChannel = SelectorProvider.provider().openServerSocketChannel();
+            socketChannel = SelectorProvider.provider().openServerSocketChannel();
+
             ServerSocket socket = socketChannel.socket();
             socket.bind(new InetSocketAddress(port));
             boundSockets.add(socket);
@@ -150,6 +153,21 @@ public class PortKeeper implements Runnable {
         } catch (IOException e) {
 
             if(printError) System.err.println("E " + port + " : " + e.getMessage());
+
+            if(socketChannel != null) {
+
+                try {
+
+                    socketChannel.close();
+
+                } catch (IOException e1) {
+
+                    /* ignore */
+
+                }
+
+            }
+
             return false;
 
         }
