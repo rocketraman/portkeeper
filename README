@@ -1,0 +1,17 @@
+portkeeper
+=============================================================
+
+Keeps a series of ports open while running. Useful to reserve ports
+on a system. Ports can then be allocated to system users and then
+removed from portkeeper.
+
+Functions:
+
+- specify port ranges or individual ports
+- specify exclusions within the given port list
+- periodically attempts to rebind to ports that could not be bound at startup
+
+TODOs:
+
+- allow modification and reporting of port range online (via command line and/or gui)
+- parameterize rebind retry interval
